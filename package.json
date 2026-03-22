@@ -1,0 +1,50 @@
+{
+  "name": "local-copilot",
+  "displayName": "Local Copilot",
+  "description": "Local AI coding assistant with ghost-text, chat, and talking teacher",
+  "version": "0.3.0",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Machine Learning", "Programming Languages", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": { "activitybar": [{ "id": "local-copilot-sidebar", "title": "Local Copilot", "icon": "$(hubot)" }] },
+    "views": { "local-copilot-sidebar": [{ "type": "webview", "id": "local-copilot.chatView", "name": "Agent Chat" }] },
+    "commands": [
+      { "command": "local_copilot.explainCode", "title": "Copilot: Explain Code" },
+      { "command": "local_copilot.fixBugs", "title": "Copilot: Fix Bugs" },
+      { "command": "local_copilot.generateTests", "title": "Copilot: Generate Tests" },
+      { "command": "local_copilot.toggleCompletion", "title": "Copilot: Toggle Ghost Text" }
+    ],
+    "menus": { "editor/context": [
+      { "command": "local_copilot.explainCode", "group": "copilot@1" },
+      { "command": "local_copilot.fixBugs", "group": "copilot@2" },
+      { "command": "local_copilot.generateTests", "group": "copilot@3" }
+    ] }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
